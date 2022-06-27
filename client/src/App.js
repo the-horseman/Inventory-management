@@ -2,8 +2,8 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, Link } from 'react-router-dom';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Inventory from "./pages/Inventory";
-import Category from "./pages/Category";
+import Inventory from "./pages/Product/Inventory";
+import Category from "./pages/Category/Category";
 import User from "./pages/User";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
@@ -38,7 +38,6 @@ function App() {
 				});
 				navigate("/login");
 			} else {
-				console.log(response);
 				setUserDetails({
 					isLoggedIn: true,
 					username: response.data.username,
@@ -52,10 +51,9 @@ function App() {
 
 	// Function to show User Details
 	function showLogout() {
-		console.log("hi");
 		return (
 			<>
-				<button onClick={() => {
+				<button id='logout-butt' onClick={() => {
 					localStorage.removeItem("accessToken");
 					setUserDetails({
 						isLoggedIn: false,

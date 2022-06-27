@@ -17,7 +17,6 @@ function Register() {
     const navigate = useNavigate();
 
     const registerSubmit = (data) => {
-        data.phoneNo = parseInt(data.phoneNo);
         axios.post('http://localhost:3001/users/register', data).then((response) => {
             console.log(response);
             navigate('/login');
