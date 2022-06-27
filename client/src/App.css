@@ -1,0 +1,29 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.login-container, .register-container {
+  width: 100vw;
+  height: 40vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#login-heading, #register-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  color: black;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.inventory-container, .category-container {
+  display: flex;
+  width: 100vw;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
