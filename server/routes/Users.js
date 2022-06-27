@@ -38,22 +38,22 @@ router.post("/login", async (req, res) => {
             username: username
         }
     });
-    if (user) {
+    if (user != null) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (isMatch) {
             const accessToken = sign({
-                username : user.username,
-                id : user.id,
-                email : user.email,
-                phoneNo : user.phoneNo 
+                username: user.username,
+                id: user.id,
+                email: user.email,
+                phoneNo: user.phoneNo
             }, "sectretKey");
             res.json({
                 accessToken: accessToken,
                 user: {
-                    username : user.username,
-                    id : user.id,
-                    email : user.email,
-                    phoneNo : user.phoneNo 
+                    username: user.username,
+                    id: user.id,
+                    email: user.email,
+                    phoneNo: user.phoneNo
                 }
             });
         } else {
@@ -69,6 +69,25 @@ router.post("/login", async (req, res) => {
 // Check logged in on page refresh
 router.get("/check", validateToken, async (req, res) => {
     res.json(req.user);
+});
+
+router.post("/edit", async (req, res) => {
+    const { tochange, val, id } = req.body;
+    if (tochange == "Name") {
+        await InvntUser.update({ username: val }, { where: { id: id } });
+    } else if (tochange == "Password") {
+        const hash = await bcrypt.hash(val, 10);
+        await InvntUser.update({ password: hash }, { where: { id: id } });
+    } else if (tochange == "Phone No") {
+        if (/^[0-9]{10}$/.test(val) == true) {
+            await InvntUser.update({ phoneNo: val }, { where: { id: id } });
+        } else {
+            res.json({ error: "Phone No is not valid" });
+        }
+    } else {
+        await InvntUser.update({ email: val }, { where: { id: id } });
+    }
+    res.json({ success: "Updated successfully" });
 });
 
 module.exports = router;
